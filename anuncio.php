@@ -11,13 +11,13 @@ if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true
   header('Location: login.php');
 }
 
-$login = $_SESSION['login'];
+$login = $_SESSION['login']; 
 
 
 
 if (isset($_FILES['foto'])) 
 {
-  $extensao = strtolower(substr($_FILES['foto']['name'], -4)); //pega o nome da extensao do arquivo exemplo .jpg
+  $extensao = strtolower(substr($_FILES['foto']['name'], -4)); //pegaa o nome da extensao do arquivo exemplo .jpg
   $novoNome = uniqid() . $extensao; //define o nome do arquivo
   $diretorio = "arquivos/"; //define o diretorio para onde enviaremos o arquivo
 
