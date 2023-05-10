@@ -13,63 +13,11 @@ if(isset($_POST['submit']))
     $cidade = $_POST['cidade'];
     $estado = $_POST['estado'];
     $tipoUsuario = $_POST['escolha'];
-    $frase = '';
 
-	
-    if (!preg_match('/^[a-zA-Z0-9]{3,}$/', $login)) {
-        $frase = $frase . 'O login deve ter no mínimo 3 caracteres alfanuméricos';
-        $login_error = false;
-    } else {
-        $login_error = true;
-    }
+    $result1 = mysqli_query($conexao, "INSERT INTO tb_usuario(Login, Senha, Telefone, cpf, ID_TipoSexo, DataNasc, Estado, Cidade, ID_TipoUsu)
+    VALUES ('$login', '$senha', '$telefone', '$cpf', '$sexo', '$dataNasc', '$estado', '$cidade', '$tipoUsuario')");
 
-
-    if (!preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/', $senha)) {
-        $frase = $frase . 'Senha inválida. Deve ter pelo menos 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.';
-        $login_error = false;
-    } else {
-        $login_error = true;
-    }
-
-
-    if (!preg_match('/^\d{3}\d{3}\d{3}\d{2}$/', $cpf)) {
-        $frase = $frase . 'CPF inválido. Utilize o formato XXX.XXX.XXX-XX.';
-        $login_error = false;
-    } else {
-        $login_error = true;
-    }
-
-    if (!preg_match('/^\(\d{2}\)\s\d{4,5}-\d{4}$/', $telefone)) {
-        $frase = $frase . 'Telefone inválido. Utilize o formato (XX) XXXXX-XXXX ou (XX) XXXX-XXXX.';
-        $login_error = false;
-    } else {
-        $login_error = true;
-    }
-
-    if (!preg_match('/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/', $cidade)) {
-        $frase = $frase . 'Cidade inválida. Utilize apenas letras e espaços.';
-        $login_error = false;
-    } else {
-        $login_error = true;
-    }
-
-    if (!preg_match('/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/', $estado)) {
-        $frase = $frase . 'Estado inválido. Utilize apenas letras e espaços.';
-        $login_error = false;
-    } else {
-        $login_error = true;
-    }
-    
-    if($login_error){
-        // Insere os dados na tabela tb_usuario
-        $result1 = mysqli_query($conexao, "INSERT INTO tb_usuario(Login, Senha, Telefone, cpf, ID_TipoSexo, DataNasc, Estado, Cidade, ID_TipoUsu)
-        VALUES ('$login', '$senha', '$telefone', '$cpf', '$sexo', '$dataNasc', '$estado', '$cidade', '$tipoUsuario')");
-    } else{
-        $result1 = false;
-    }
-
-
-    if($result1 and $login_error) {
+    if($result1) {
         echo "Usuário cadastrado com sucesso!";
         if ($_POST['escolha'] == 2){
             header('Location: login.php');
@@ -112,20 +60,24 @@ if(isset($_POST['submit']))
                     <form action="cadastro.php" method="POST">
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-login" name="login" placeholder="Login:" required>
+                            <input type="text" class="input-text" id="input-login" name="login" placeholder="Login:" oninput=" validateLogin(this.value)" required>
                         </div>
+                        <div id="erro-login"></div>
                         <div class="form-control">  
                             <div class="side-bar"></div>
-                            <input type="password" class="input-text" id="input-senha" name="senha" placeholder="Senha:" required>
+                            <input type="password" class="input-text" id="input-senha" name="senha" placeholder="Senha:" oninput="validatePassword(this.value)" required>
                         </div>
+                        <div id="erro-senha"></div>
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-login" name="cpf" placeholder="CPF:" required>
+                            <input type="text" class="input-text" id="input-cpf" name="cpf" placeholder="CPF:" oninput="validateCPF(this.value)" required>
                         </div>
+                        <div id="erro-cpf"></div>
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-login" name="telefone" placeholder="Telefone:" required>
+                            <input type="text" class="input-text" id="input-telefone" name="telefone" placeholder="Telefone:" oninput="validateTelefone(this.value)" required>
                         </div>
+                        <div id="erro-telefone"></div>
                         <div class="form-control">
                             <div class="side-bar"></div>
                             <div class="input-text">
@@ -143,12 +95,14 @@ if(isset($_POST['submit']))
                         </div>
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-login" name="cidade" placeholder="Cidade:" required>
+                            <input type="text" class="input-text" id="input-cidade" name="cidade" placeholder="Cidade:" oninput="validateCidade(this.value)" required>
                         </div>
+                        <div id="erro-cidade"></div>
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-login" name="estado" placeholder="Estado:" required>
+                            <input type="text" class="input-text" id="input-login" name="estado" placeholder="Estado:" oninput="validateEstado(this.value)" required>
                         </div>
+                        <div id="erro-estado"></div>
                         <div class="form-control">
                             <div class="side-bar"></div>
                             <select name="escolha" class="input-text" required>
@@ -164,4 +118,80 @@ if(isset($_POST['submit']))
                 </div>
             </div>
         </div>
+        <script>
+            function validatePassword(password) {
+                const regex = /^(?=.*[A-Z])(?=.*\d).{4,}$/;
+                const isValid = regex.test(password);
+                const errorText = document.getElementById("erro-senha");
+                const passwordInput = document.getElementById("input-senha");
+                if (isValid) {
+                    errorText.innerHTML = "";
+                } else {
+                    errorText.innerHTML = "Sua senha deve ter no minímo 4 caracteres e um número";
+                }
+            }
+
+            function validateLogin(login) {
+                const regex = /^[a-zA-Z0-9_-]{3,20}$/;
+                const isValid = regex.test(login);
+                const errorText = document.getElementById("erro-login");
+                const loginInput = document.getElementById("input-login");
+                if (isValid) {
+                    errorText.innerHTML = "";
+                } else {
+                    errorText.innerHTML = "Seu login deve possuir no minímo 3";
+                }
+            }
+
+            function validateCPF(cpf) {
+                const regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+                const isValid = regex.test(cpf);
+                const errorText = document.getElementById("erro-cpf");
+                const loginInput = document.getElementById("input-cpf");
+                if (isValid) {
+                    errorText.innerHTML = "";
+                } else {
+                    errorText.innerHTML = "CPF errado! Formato esperado: XXX.XXX.XXX-XX";
+                }
+            }
+
+            function validateTelefone(telefone) {
+                const regex = /^\(\d{2}\) \d{4,5}\-\d{4}$/;
+                const isValid = regex.test(telefone);
+                const errorText = document.getElementById("erro-telefone");
+                const loginInput = document.getElementById("input-telefone");
+                if (isValid) {
+                    errorText.innerHTML = "";
+                } else {
+                    errorText.innerHTML = "Telefone errado! Formato esperado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX";
+                }
+            }
+
+            function validateCidade(cidade) {
+                const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/;
+                const isValid = regex.test(cidade);
+                const errorText = document.getElementById("erro-cidade");
+                const loginInput = document.getElementById("input-cidade");
+                if (isValid) {
+                    errorText.innerHTML = "";
+                } else {
+                    errorText.innerHTML = "Errado! A cidade não deve possuir números ou caracteres especiais";
+                }
+            }
+
+            function validateEstado(estado) {
+                const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/;
+                const isValid = regex.test(estado);
+                const errorText = document.getElementById("erro-estado");
+                const loginInput = document.getElementById("input-estado");
+                if (isValid) {
+                    errorText.innerHTML = "";
+                } else {
+                    errorText.innerHTML = "Errado! O estado não deve possuir números ou caracteres especiais";
+                }
+            }
+
+            
+        </script>
     </body>
+</html>
