@@ -93,6 +93,8 @@ if(isset($_POST['submit']))
                             <div class="side-bar"></div>
                             <input type="date" name="data_nascimento" id="data_nascimento" class="input-text" required>
                         </div>
+                        <div id="erro-data"></div>
+                        <div id="erro-telefone"></div>
                         <div class="form-control">
                             <div class="side-bar"></div>
                             <input type="text" class="input-text" id="input-cidade" name="cidade" placeholder="Cidade:" oninput="validateCidade(this.value)" required>
@@ -105,12 +107,13 @@ if(isset($_POST['submit']))
                         <div id="erro-estado"></div>
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <select name="escolha" class="input-text" required>
+                            <select name="escolha" class="input-text" onclick="validateEscolha(this)" required>
                                 <option value="0" >Escolha: Locador/Locatário</option>
                                 <option value="2" >Locador</option>
                                 <option value="3" >Locatário</option>
                             </select>
                         </div>
+                        <div id="erro-escolha"></div>
                     <a href="login2.php"><h3 class="register">Entrar como Locatário</h3></a>
                     <a href="login.php"><h3 class="register">Entrar como Locador</h3></a>
                     <input class="input-submit" type="submit" name="submit" id="submit" value="ENTRAR">
@@ -119,6 +122,17 @@ if(isset($_POST['submit']))
             </div>
         </div>
         <script>
+            const inputDataNascimento = document.getElementById('data_nascimento');
+            const errorText = document.getElementById("erro-data");
+            inputDataNascimento.addEventListener('change', function() {   
+                if (!validarDataNascimento(this.value)) {
+                    errorText.innerHTML = "Sua data de nascimento está em formato errado ou você é menor de 18 anos";
+                    document.getElementById("submit").disabled = false;
+                } else{
+                    errorText.innerHTML = "";
+                    document.getElementById("submit").disabled = true;
+                }
+            });
             function validatePassword(password) {
                 const regex = /^(?=.*[A-Z])(?=.*\d).{4,}$/;
                 const isValid = regex.test(password);
@@ -126,8 +140,10 @@ if(isset($_POST['submit']))
                 const passwordInput = document.getElementById("input-senha");
                 if (isValid) {
                     errorText.innerHTML = "";
+                    document.getElementById("submit").disabled = false;
                 } else {
                     errorText.innerHTML = "Sua senha deve ter no minímo 4 caracteres e um número";
+                    document.getElementById("submit").disabled = true;
                 }
             }
 
@@ -138,20 +154,24 @@ if(isset($_POST['submit']))
                 const loginInput = document.getElementById("input-login");
                 if (isValid) {
                     errorText.innerHTML = "";
+                    document.getElementById("submit").disabled = false;
                 } else {
                     errorText.innerHTML = "Seu login deve possuir no minímo 3";
+                    document.getElementById("submit").disabled = true;
                 }
             }
 
             function validateCPF(cpf) {
-                const regex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+                const regex = /^\d{11}$/;
                 const isValid = regex.test(cpf);
                 const errorText = document.getElementById("erro-cpf");
                 const loginInput = document.getElementById("input-cpf");
                 if (isValid) {
                     errorText.innerHTML = "";
+                    document.getElementById("submit").disabled = false;
                 } else {
-                    errorText.innerHTML = "CPF errado! Formato esperado: XXX.XXX.XXX-XX";
+                    errorText.innerHTML = "CPF errado! Formato esperado: XXXXXXXXXXX";
+                    document.getElementById("submit").disabled = true;
                 }
             }
 
@@ -162,8 +182,10 @@ if(isset($_POST['submit']))
                 const loginInput = document.getElementById("input-telefone");
                 if (isValid) {
                     errorText.innerHTML = "";
+                    document.getElementById("submit").disabled = false;
                 } else {
                     errorText.innerHTML = "Telefone errado! Formato esperado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX";
+                    document.getElementById("submit").disabled = true;
                 }
             }
 
@@ -174,8 +196,10 @@ if(isset($_POST['submit']))
                 const loginInput = document.getElementById("input-cidade");
                 if (isValid) {
                     errorText.innerHTML = "";
+                    document.getElementById("submit").disabled = false;
                 } else {
                     errorText.innerHTML = "Errado! A cidade não deve possuir números ou caracteres especiais";
+                    document.getElementById("submit").disabled = true;
                 }
             }
 
@@ -186,9 +210,45 @@ if(isset($_POST['submit']))
                 const loginInput = document.getElementById("input-estado");
                 if (isValid) {
                     errorText.innerHTML = "";
+                    document.getElementById("submit").disabled = false;
                 } else {
                     errorText.innerHTML = "Errado! O estado não deve possuir números ou caracteres especiais";
+                    document.getElementById("submit").disabled = true;
                 }
+            }
+
+            function validateEscolha(select) {
+                if (select.value === "0") {
+                    select.setCustomValidity("Escolha uma opção válida.");
+                } else {
+                    select.setCustomValidity("");
+                }
+            }
+
+            function validarDataNascimento(data) {
+                // Obtém a data atual
+                const dataAtual = new Date();
+                
+                // Obtém a data de nascimento do input e converte para um objeto Date
+                const dataNascimento = new Date(data);
+
+                // Verifica se a data de nascimento é maior que a data atual
+                if (dataNascimento > dataAtual) {
+                    return false;
+                }
+
+                // Calcula a idade a partir da data de nascimento
+                const diffAnos = dataAtual.getFullYear() - dataNascimento.getFullYear();
+                const diffMeses = dataAtual.getMonth() - dataNascimento.getMonth();
+                const diffDias = dataAtual.getDate() - dataNascimento.getDate();
+
+                // Verifica se a pessoa tem pelo menos 18 anos
+                if (diffAnos < 18 || (diffAnos === 18 && diffMeses < 0) || (diffAnos === 18 && diffMeses === 0 && diffDias < 0)) {
+                    return false;
+                }
+
+                // A data de nascimento é válida
+                return true;
             }
 
             
