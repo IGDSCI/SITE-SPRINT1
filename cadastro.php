@@ -45,7 +45,12 @@ if(isset($_POST['submit']))
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Rubik&display=swap" rel="stylesheet">
-
+        <style>
+            .span-required{
+                display: none;
+                color: red;
+            }
+        </style>
     </head>
 
     <body>
@@ -57,27 +62,27 @@ if(isset($_POST['submit']))
             <div class="right-container">
                 <div class="right-control fade-in-image"> 
                     <h2>FAÇA SEU CADASTRO</h2>
-                    <form action="cadastro.php" method="POST">
+                    <form id="form" action="cadastro.php" method="POST">
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-login" name="login" placeholder="Login:" oninput=" validateLogin(this.value)" required>
+                            <input type="text" class="input-text required" id="input-login" name="login" placeholder="Login:" oninput="loginValidate()" required>
                         </div>
-                        <div id="erro-login"></div>
+                        <span class = 'span-required'>Login</span>
                         <div class="form-control">  
                             <div class="side-bar"></div>
-                            <input type="password" class="input-text" id="input-senha" name="senha" placeholder="Senha:" oninput="validatePassword(this.value)" required>
+                            <input type="password" class="input-text required" id="input-senha" name="senha" placeholder="Senha:" oninput="senhaValidate()" required>
                         </div>
-                        <div id="erro-senha"></div>
+                        <span class = 'span-required'>Senha</span>
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-cpf" name="cpf" placeholder="CPF:" oninput="validateCPF(this.value)" required>
+                            <input type="text" class="input-text required" id="input-cpf" name="cpf" placeholder="CPF:" oninput="cpfValidate()"   required>
                         </div>
-                        <div id="erro-cpf"></div>
+                        <span class = 'span-required'>CPF</span>
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-telefone" name="telefone" placeholder="Telefone:" oninput="validateTelefone(this.value)" required>
+                            <input type="text" class="input-text required" id="input-telefone" name="telefone" placeholder="Telefone:" oninput="telefoneValidate()"  required>
                         </div>
-                        <div id="erro-telefone"></div>
+                        <span class = 'span-required'>Telefone</span>
                         <div class="form-control">
                             <div class="side-bar"></div>
                             <div class="input-text">
@@ -93,18 +98,18 @@ if(isset($_POST['submit']))
                             <div class="side-bar"></div>
                             <input type="date" name="data_nascimento" id="data_nascimento" class="input-text" required>
                         </div>
-                        <div id="erro-data"></div>
+                        <span id="erro-data"></span>
                         <div id="erro-telefone"></div>
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-cidade" name="cidade" placeholder="Cidade:" oninput="validateCidade(this.value)" required>
+                            <input type="text" class="input-text required" id="input-cidade" name="cidade" placeholder="Cidade:" oninput="cidadeValidate()" required>
                         </div>
-                        <div id="erro-cidade"></div>
+                        <span class = 'span-required'>Cidade</span>
                         <div class="form-control">
                             <div class="side-bar"></div>
-                            <input type="text" class="input-text" id="input-login" name="estado" placeholder="Estado:" oninput="validateEstado(this.value)" required>
+                            <input type="text" class="input-text required" id="input-login" name="estado" placeholder="Estado:" oninput="estadoValidate()" required>
                         </div>
-                        <div id="erro-estado"></div>
+                        <span class = 'span-required'>Estado</span>
                         <div class="form-control">
                             <div class="side-bar"></div>
                             <select name="escolha" class="input-text" onclick="validateEscolha(this)" required>
@@ -127,96 +132,12 @@ if(isset($_POST['submit']))
             inputDataNascimento.addEventListener('change', function() {   
                 if (!validarDataNascimento(this.value)) {
                     errorText.innerHTML = "Sua data de nascimento está em formato errado ou você é menor de 18 anos";
-                    document.getElementById("submit").disabled = false;
+                    this.value = '';
                 } else{
                     errorText.innerHTML = "";
-                    document.getElementById("submit").disabled = true;
                 }
             });
-            function validatePassword(password) {
-                const regex = /^(?=.*[A-Z])(?=.*\d).{4,}$/;
-                const isValid = regex.test(password);
-                const errorText = document.getElementById("erro-senha");
-                const passwordInput = document.getElementById("input-senha");
-                if (isValid) {
-                    errorText.innerHTML = "";
-                    document.getElementById("submit").disabled = false;
-                } else {
-                    errorText.innerHTML = "Sua senha deve ter no minímo 4 caracteres e um número";
-                    document.getElementById("submit").disabled = true;
-                }
-            }
-
-            function validateLogin(login) {
-                const regex = /^[a-zA-Z0-9_-]{3,20}$/;
-                const isValid = regex.test(login);
-                const errorText = document.getElementById("erro-login");
-                const loginInput = document.getElementById("input-login");
-                if (isValid) {
-                    errorText.innerHTML = "";
-                    document.getElementById("submit").disabled = false;
-                } else {
-                    errorText.innerHTML = "Seu login deve possuir no minímo 3";
-                    document.getElementById("submit").disabled = true;
-                }
-            }
-
-            function validateCPF(cpf) {
-                const regex = /^\d{11}$/;
-                const isValid = regex.test(cpf);
-                const errorText = document.getElementById("erro-cpf");
-                const loginInput = document.getElementById("input-cpf");
-                if (isValid) {
-                    errorText.innerHTML = "";
-                    document.getElementById("submit").disabled = false;
-                } else {
-                    errorText.innerHTML = "CPF errado! Formato esperado: XXXXXXXXXXX";
-                    document.getElementById("submit").disabled = true;
-                }
-            }
-
-            function validateTelefone(telefone) {
-                const regex = /^\(\d{2}\) \d{4,5}\-\d{4}$/;
-                const isValid = regex.test(telefone);
-                const errorText = document.getElementById("erro-telefone");
-                const loginInput = document.getElementById("input-telefone");
-                if (isValid) {
-                    errorText.innerHTML = "";
-                    document.getElementById("submit").disabled = false;
-                } else {
-                    errorText.innerHTML = "Telefone errado! Formato esperado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX";
-                    document.getElementById("submit").disabled = true;
-                }
-            }
-
-            function validateCidade(cidade) {
-                const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/;
-                const isValid = regex.test(cidade);
-                const errorText = document.getElementById("erro-cidade");
-                const loginInput = document.getElementById("input-cidade");
-                if (isValid) {
-                    errorText.innerHTML = "";
-                    document.getElementById("submit").disabled = false;
-                } else {
-                    errorText.innerHTML = "Errado! A cidade não deve possuir números ou caracteres especiais";
-                    document.getElementById("submit").disabled = true;
-                }
-            }
-
-            function validateEstado(estado) {
-                const regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/;
-                const isValid = regex.test(estado);
-                const errorText = document.getElementById("erro-estado");
-                const loginInput = document.getElementById("input-estado");
-                if (isValid) {
-                    errorText.innerHTML = "";
-                    document.getElementById("submit").disabled = false;
-                } else {
-                    errorText.innerHTML = "Errado! O estado não deve possuir números ou caracteres especiais";
-                    document.getElementById("submit").disabled = true;
-                }
-            }
-
+    
             function validateEscolha(select) {
                 if (select.value === "0") {
                     select.setCustomValidity("Escolha uma opção válida.");
@@ -251,7 +172,137 @@ if(isset($_POST['submit']))
                 return true;
             }
 
+
+            const form = document.getElementById('form');
+            const campos = document.querySelectorAll('.required');
+            const spans = document.querySelectorAll('.span-required');
+            const regexLogin = /^\w{3,}$/; 
+            const regexSenha = /^.{8,}$/;
+            const regexCPF = /^\d{11}$/;
+            const regexTelefone = /^\d{10,11}$/;
+
+            form.querySelectorAll('input, select, textarea').forEach((element) => {
+                element.addEventListener('change', (event) => {
+                    
+                if (campos[0].value.length < 3){
+                    setError(0);
+                    document.getElementById("submit").disabled = true;
+                    return;
+                } else {
+                        removeError(0);
+                        document.getElementById("submit").disabled = false;
+                    }
+
+                if (campos[1].value.length < 8){
+                    setError(1);
+                    document.getElementById("submit").disabled = true;
+                    return;
+                } else {
+                    document.getElementById("submit").disabled = false;
+                    removeError(1);
+                }
+
+                if (!regexCPF.test(campos[2].value)){
+                    setError(2);
+                    document.getElementById("submit").disabled = true;
+                    return;
+                } else {
+                    document.getElementById("submit").disabled = false;
+                    removeError(2);
+                }
+                
+                if (!regexTelefone.test(campos[3].value)){
+                    setError(3);
+                    document.getElementById("submit").disabled = true;
+                    return;
+                } else {
+                    document.getElementById("submit").disabled = false;
+                    removeError(3);
+                }
+
+                if (campos[4].value.match(/^[A-Za-z]+$/)){
+                    removeError(4);
+                    document.getElementById("submit").disabled = false;
+                } else {
+                    document.getElementById("submit").disabled = true;
+                    setError(4);
+                    return;
+                }
+
+                if (campos[5].value.match(/^[A-Za-z]+$/)){
+                    removeError(5);
+                    document.getElementById("submit").disabled = false;
+                } else {
+                    document.getElementById("submit").disabled = true;
+                    setError(5);
+                    return;
+                }
+
+                return true;
+                    
+                });
+            });
             
+
+
+            function loginValidate(){
+                if (campos[0].value.length < 3){
+                    setError(0)
+                    return
+                } else {
+                    removeError(0)
+                }
+            }
+
+            function setError(index){
+                campos[index].style.border = '2px solid #e63636'
+                spans[index].style.display = 'block';
+            }
+
+            function removeError(index){
+                campos[index].style.border = ''
+                spans[index].style.display = 'none';
+            }
+
+            function senhaValidate(){
+                if (campos[1].value.length < 8){
+                    setError(1)
+                } else {
+                    removeError(1)
+                }
+            }
+
+            function cpfValidate(){
+                if (!regexCPF.test(campos[2].value)){
+                    setError(2);
+                } else {
+                    removeError(2);
+                }
+            }
+
+            function telefoneValidate(){
+                if (!regexTelefone.test(campos[3].value)){
+                    setError(3);
+                } else {
+                    removeError(3);
+                }
+            }
+
+            function cidadeValidate(){
+                if (campos[4].value.match(/^[A-Za-z]+$/)){
+                    removeError(4);
+                } else {
+                    setError(4);
+                }
+            }
+
+            function estadoValidate(){
+                if (campos[5].value.match(/^[A-Za-z]+$/)){
+                    removeError(5);
+                } else {
+                    setError(5);
+                }
+            }
         </script>
     </body>
 </html>
