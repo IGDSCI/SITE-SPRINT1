@@ -169,4 +169,68 @@ body{
 .botao:hover{
     transform: scale(1.05);
 }
+.div-container {
+  margin-top: 100px;
+  margin-left: 100px;
+  max-width: 1000px;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-align: center;
+}
+
+.item {
+  width: 19%;
+  display: inline-block;
+  margin-right: 1%;
+  margin-bottom: 20px;
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.item:hover{
+  transform: scale(1.05);
+}
+
+.imagemproduto {
+  width: 100px;
+}
+
+.nome-produto {
+  font-size: 26px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.descricao-produto {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.preco-produto {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.botao-comprar {
+  padding: 12px 25px;
+  background-color: var(--cor-quaternaria);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: large;
+}
+
+.botao-comprar:hover {
+  background-color: var(--cor-primaria);
+  transform: scale(1.05);
+}
+
+.botao-comprar:active {
+  background-color: var(--cor-quaternaria);
+}
   

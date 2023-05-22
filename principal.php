@@ -64,6 +64,7 @@
         <a href="outra_pagina2.php" class="botao">Página 2</a>
         <a href="outra_pagina3.php" class="botao">Página 3</a>
     </div>
+	
 		<?php
 			// ... código anterior ...
 			// Verifica se a consulta retornou resultados
@@ -75,10 +76,10 @@
 					// Exibe os dados na tabela HTML
 					echo "<div class='item' id='card-content' style='width: 19%; display: inline-block; margin-right: 1%; margin-bottom: 20px;'>";
 					echo "<td><img class='imagemproduto'  width=50px src=".$linha['Foto']."></td>";
-					echo "<td> <h1 class='nome-produto'> Nome: ".$linha['Nome']."</h1></td>";
-					echo "<td> <h1 class='descricao-produto'> Descrição:".$linha['Descricao']."</h1></td>";
-					echo "<td> <h1 class='preco-produto'> Preço: ".$linha['Preco']."</h1></td>";
-					echo "<td> <h1 class='descricao-produto'> Categoria: ".$linha['TipoCategoria']."</h1></td>";
+					echo "<td> <h1 class='nome-produto'>  ".$linha['Nome']."</h1></td>";
+					echo "<td> <h1 class='descricao-produto'> ".$linha['Descricao']."</h1></td>";
+					echo "<td> <h1 class='preco-produto'> R$   ".$linha['Preco']."</h1></td>";
+					echo "<td> <h1 class='descricao-produto'>  ".$linha['TipoCategoria']."</h1></td>";
 					echo "<button class='botao-comprar'>Comprar</button>";
 					echo "</div>";
 				}
