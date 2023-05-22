@@ -34,16 +34,16 @@
     <link href="https://googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <a id="logo" href="principal.php"> <img  src="Images/LOGOALLLUGA%20.png"></a>
-        <div class="search-container">
+    <header class = "cabecalho">
+        <a  href="principal.php"> <img id="logo" src="Images/LOGOALLLUGA.png"></a>
+        <div class="pesquisa__itens">
                 <input type="search" placeholder="Pesquisar..." id="pesquisar">
-                <button onclick="searchData()">Buscar</button>
+                <button id="botao__busca" onclick="searchData()"><img id="lupa" src="images/lupa.png"></button>
         </div>
-        <div class="signup-container">
-            <a href="cadastro.php" class="signup-btn">Cadastro</a>
-            <a href="login.php" class="signup-btn">Entrar como locador</a>
-            <a href="login2.php" class="signup-btn">Entrar como locatário</a>
+        <div class="botoes__container">
+            <a href="cadastro.php" class="botoes">Cadastro</a>
+            <a href="login.php" class="botoes">Entrar como locador</a>
+            <a href="login2.php" class="botoes">Entrar como locatário</a>
         </div>
     </header>
     <ul class="categorias">
@@ -58,6 +58,12 @@
             <a class = "nome-categoria" href="#"><img class="icone" src="Images/icone3.png">Esporte</a>
         </li>
     </ul>
+
+	<div class="botoes-simples">
+        <a href="outra_pagina1.php" class="botao">Página 1</a>
+        <a href="outra_pagina2.php" class="botao">Página 2</a>
+        <a href="outra_pagina3.php" class="botao">Página 3</a>
+    </div>
 		<?php
 			// ... código anterior ...
 			// Verifica se a consulta retornou resultados
