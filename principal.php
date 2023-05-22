@@ -76,11 +76,9 @@
 					// Exibe os dados na tabela HTML
 					echo "<div class='item' id='card-content' style='width: 19%; display: inline-block; margin-right: 1%; margin-bottom: 20px;'>";
 					echo "<td><img class='imagemproduto'  width=50px src=".$linha['Foto']."></td>";
-					echo "<td> <h1 class='nome-produto'>  ".$linha['Nome']."</h1></td>";
-					echo "<td> <h1 class='descricao-produto'> ".$linha['Descricao']."</h1></td>";
+					echo "<td> <h1 class='nome-produto'>  ".$linha['Nome']."</h1></td>";			
 					echo "<td> <h1 class='preco-produto'> R$   ".$linha['Preco']."</h1></td>";
-					echo "<td> <h1 class='descricao-produto'>  ".$linha['TipoCategoria']."</h1></td>";
-					echo "<button class='botao-comprar'>Comprar</button>";
+					echo "<button class='botao-comprar'>Alugar</button>";
 					echo "</div>";
 				}
 				echo '</div>';
