@@ -35,25 +35,136 @@ if(isset($_POST['submit']))
     <head>
         <title> All Luga </title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">  
-
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-        <!-- Fonts -->
-        <link href='http://fonts.googleapis.com/css?family=Sintony:400,700' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="Css/Cadastro.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Rubik&display=swap" rel="stylesheet">
-        <style>
-            .span-required{
-                display: none;
-                color: red;
-            }
-        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="Css/style.css">
+        
     </head>
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat&family=Roboto+Condensed:wght@300&display=swap');
+
+  * {
+      padding: 0px;
+      margin: 0px;
+    }
+
+    :root {
+      --cor-primaria: #0A2647;
+      --cor-secundaria: #144272;
+      --cor-terciaria: #205295;
+      --cor-quaternaria: #2C74B3; 
+      --cor-quintenaria: #d7d7d7;
+    }
+
+    body {
+      background-image: linear-gradient(to right, #fff, #dfdfdf); 
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .main-section {
+      display: flex;
+      justify-content: flex-start; /* Alterado para "flex-start" */
+      align-items: center;
+      height: 100vh;
+      background-color: var(--cor-quintenaria);
+    }
+
+    .left-container,
+    .right-container {
+      width: 50%;
+      padding: 0 20px; /* Adicionado padding horizontal para espaçamento */
+    }
+
+    .form-control {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-text {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .side-bar {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 60%;
+      background-color: #ccc;
+    }
+
+    .span-required {
+      color: red;
+    }
+
+    .input-submit {
+      padding: 10px 20px;
+      background-color: var(--cor-quaternaria);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .input-submit:hover {
+      background-color: var(--cor-primaria);
+    }
+
+    .span-required {
+      color: var(--cor-primaria);
+    }
+    .botoes-locador {
+        background-color: #144272;
+        margin-right: 10px;
+    }
+
+    .botoes-locatario {
+        background-color: #2C74B3;
+        margin-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+      /* Estilos para telas menores */
+      .main-section {
+        flex-direction: column; /* Alterado para "column" */
+        justify-content: center;
+        align-items: center;
+        height: auto;
+      }
+
+      .left-container,
+      .right-container {
+        width: 100%;
+        padding: 0;
+      
+    }
+    .side-bar {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 60%;
+      background-color: #ccc;
+    }
+  </style
+
+    </style>
 
     <body>
+    <header class = "cabecalho">
+        <a  href="principal.php"> <img id="logo" src="Images/LOGOALLLUGA.png"></a>
+        <div class="botoes__container">
+            <a href="cadastro.php" class="botoes">Cadastro</a>
+            <a href="login.php" class="botoes">Entrar como locador</a>
+            <a href="login2.php" class="botoes">Entrar como locatário</a>
+        </div>
+    </header>
         <div class="main-section">
             <div class="left-container">
                     

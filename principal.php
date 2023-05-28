@@ -4,8 +4,6 @@
 	include_once('conexao.php');
 
 
-	$darkMode = isset($_SESSION['darkMode']) ? $_SESSION['darkMode'] : false;   
-
 	if(!empty($_GET['search']))
 	{
 		$data = $_GET['search'];
@@ -34,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="Css/style.css">
     <link href="https://googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 </head>
-<body class="<?php echo $darkMode ? 'dark-mode' : 'light-mode'; ?>">
+<body>
     <header class = "cabecalho">
         <a  href="principal.php"> <img id="logo" src="Images/LOGOALLLUGA.png"></a>
         <div class="pesquisa__itens">
@@ -65,9 +63,6 @@
         <a href="outra_pagina2.php" class="botao">Página 2</a>
         <a href="outra_pagina3.php" class="botao">Página 3</a>
     </div>
-	<footer>
-	<button class="dark-mode" onclick="toggleDarkMode()">Dark Mode</button>
-	</footer>
 		<?php
 			// ... código anterior ...
 			// Verifica se a consulta retornou resultados
@@ -103,17 +98,6 @@
             searchData();
         }
     });
-	function toggleDarkMode() {
-    var body = document.body;
-    body.classList.toggle("dark-mode");
-
-    // Salva o estado do modo escuro na sessão PHP
-    var isDarkMode = body.classList.contains("dark-mode");
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "toggle_dark_mode.php");
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send("darkMode=" + (isDarkMode ? "1" : "0"));
-}
 
 </script>
 
